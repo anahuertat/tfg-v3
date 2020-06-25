@@ -3,24 +3,27 @@ package anahuerta.tfg.electronicsstorev3.service.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import anahuerta.tfg.electronicsstorev3.domain.Cart;
 import anahuerta.tfg.electronicsstorev3.domain.Component;
-import anahuerta.tfg.electronicsstorev3.persistence.ComponentRepository;
-import anahuerta.tfg.electronicsstorev3.persistence.OrderRepository;
-import anahuerta.tfg.electronicsstorev3.persistence.UserRepository;
+import anahuerta.tfg.electronicsstorev3.domain.Orders;
+import anahuerta.tfg.electronicsstorev3.domain.User;
+import anahuerta.tfg.electronicsstorev3.persistence.component.ComponentRepository;
+import anahuerta.tfg.electronicsstorev3.persistence.orders.OrdersRepository;
+import anahuerta.tfg.electronicsstorev3.persistence.user.UserRepository;
 import anahuerta.tfg.electronicsstorev3.service.ElectronicsStoreService;
 
 @Service
 public class ElectronicsStoreServiceImpl implements ElectronicsStoreService{
 	Cart cart = new Cart();
-	OrderRepository orderRepository;
+	OrdersRepository orderRepository;
 	UserRepository userRepository;
 	ComponentRepository componentRepository;
 	
-	public ElectronicsStoreServiceImpl(OrderRepository orderRepository, 
+	public ElectronicsStoreServiceImpl(OrdersRepository orderRepository, 
 			UserRepository userRepository, ComponentRepository componentRepository) {
 		this.userRepository = userRepository;
 		this.orderRepository = orderRepository;
@@ -41,7 +44,11 @@ public class ElectronicsStoreServiceImpl implements ElectronicsStoreService{
 		List<Component> items = new ArrayList<Component>();
 		Iterator<Integer> it = cart.getCartItemsReferences().iterator();
 		while(it.hasNext()) {
-			items.add(componentRepository.findComponentById(it.next()));
+			Integer reference = it.next();
+			Optional<Component> opt = componentRepository.findById(reference);
+			if(opt.isPresent()) {
+				items.add(opt.get());
+			}
 		}
 		return items;
 	}
@@ -54,9 +61,23 @@ public class ElectronicsStoreServiceImpl implements ElectronicsStoreService{
 		List<Component> items = getCartItems();
 		Iterator<Component> it = items.iterator();
 		while(it.hasNext()) {
-			componentRepository.updateStockByReference(it.next().getReference());
+			Component c = it.next();
+			componentRepository.updateStockByReference(c.getReference(), c.getStock()-1);
 		}
+		
+	}
+
+	@Override
+	public User login(String email, String password) {
+		return userRepository.findByEmailAndPassword(email, password);
+	}
+
+	@Override
+	public boolean createUser(User user) {
+		if(userRepository.save(user)!=null)
+			return true;
+		return false;
+		
 	}
 	
-
 }

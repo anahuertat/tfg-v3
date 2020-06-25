@@ -12,16 +12,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import anahuerta.tfg.electronicsstorev3.domain.Cart;
 import anahuerta.tfg.electronicsstorev3.domain.Component;
+import anahuerta.tfg.electronicsstorev3.domain.User;
 import anahuerta.tfg.electronicsstorev3.service.ElectronicsStoreService;
 
 @RestController
 @RequestMapping("/store")
 public class ElectronicsStoreController {
 	private final ElectronicsStoreService storeService;
+	private User user;
 	
 	@Autowired
 	public ElectronicsStoreController(final ElectronicsStoreService storeService) {
 		this.storeService = storeService;
+	}
+	
+	@PostMapping("/login")
+	public boolean login(@RequestBody String email, String password) {
+		user = storeService.login(email, password);
+		if(user!=null) {
+			return true;
+		}
+		return false;
+	}
+	
+	@PostMapping("/sign")
+	public boolean signUp(@RequestBody User user) {
+		return storeService.createUser(user);
 	}
 	
 	@GetMapping("/cart")

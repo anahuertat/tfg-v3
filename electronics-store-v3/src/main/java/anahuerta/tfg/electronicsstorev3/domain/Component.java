@@ -15,7 +15,7 @@ public class Component{
 	public Integer reference;
 	
 	@Column(name = "category")
-	public Category category;
+	public String category;
 	
 	@Column(name = "name")
 	public String name;
@@ -26,9 +26,15 @@ public class Component{
 	@Column(name = "stock")
 	public Integer stock;
 	
-	public Component() {}
+	public Component() {
+		reference = null;
+		category = null;
+		name = null;
+		price = null;
+		stock = null;
+	}
 	
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
 	

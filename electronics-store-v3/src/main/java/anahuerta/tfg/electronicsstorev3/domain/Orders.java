@@ -1,6 +1,5 @@
 package anahuerta.tfg.electronicsstorev3.domain;
 
-import java.sql.Timestamp;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Order {
+public class Orders {
 	@Id
 	@GeneratedValue
 	@Column(name = "order_number")
@@ -22,9 +21,6 @@ public class Order {
 	
 	@Column(name = "address")
 	public String address;
-	
-	@Column(name = "order_date")
-	public Timestamp order_date;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "user_id")
@@ -35,9 +31,14 @@ public class Order {
 		name = "order_has_component",
 		joinColumns = @JoinColumn(name= "order_number"),
 		inverseJoinColumns = @JoinColumn(name = "reference"))
-	Set<Component> componentsInThisOrder;
+	public Set<Component> componentsInThisOrder;
 	
-	public Order() {}
+	public Orders() {
+		order_number = null;
+		address = null;
+		user = null;
+		componentsInThisOrder = null;
+	}
 	
 	public Integer getOrderNumber() {
 		return order_number;
@@ -47,8 +48,6 @@ public class Order {
 		return address;
 	}
 	
-	public Timestamp getOrderDate() {
-		return order_date;
-	}
+	
 	
 }

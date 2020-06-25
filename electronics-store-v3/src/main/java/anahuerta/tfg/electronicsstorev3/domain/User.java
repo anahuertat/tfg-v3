@@ -28,10 +28,21 @@ public class User {
 	@Column(name = "email")
 	public String email;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-    private List<Order> orders;
+	@Column(name = "password")
+	public String password;
 	
-	public User() {}
+	@OneToMany(cascade = CascadeType.ALL)
+    public List<Orders> orders;
+	
+	public User() {
+		user_id = null;
+		name = null;
+		last_name = null;
+		address = null;
+		email = null;
+		password = null;
+		orders = null;
+	}
 	
 	public Integer getUserId() {
 		return user_id;
@@ -47,6 +58,14 @@ public class User {
 	
 	public String getAddress() {
 		return address;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public String getPassword() {
+		return password;
 	}
 
 }
