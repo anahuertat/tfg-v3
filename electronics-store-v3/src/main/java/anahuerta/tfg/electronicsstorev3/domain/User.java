@@ -34,15 +34,7 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL)
     public List<Orders> orders;
 	
-	public User() {
-		user_id = null;
-		name = null;
-		last_name = null;
-		address = null;
-		email = null;
-		password = null;
-		orders = null;
-	}
+	public User() {}
 	
 	public Integer getUserId() {
 		return user_id;

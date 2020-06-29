@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import anahuerta.tfg.electronicsstorev3.domain.Component;
 import anahuerta.tfg.electronicsstorev3.domain.User;
+import anahuerta.tfg.electronicsstorev3.domain.request.RequestSignUp;
 import anahuerta.tfg.electronicsstorev3.domain.Cart;
 
 @Service
@@ -21,6 +22,6 @@ public interface ElectronicsStoreService {
 
 	User login(String email, String password);
 
-	boolean createUser(User user);
+	int createUser(RequestSignUp requestSignUp);
 
 }

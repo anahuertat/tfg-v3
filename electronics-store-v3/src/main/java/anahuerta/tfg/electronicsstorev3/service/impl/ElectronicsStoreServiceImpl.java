@@ -7,14 +7,16 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import anahuerta.tfg.electronicsstorev3.domain.Cart;
-import anahuerta.tfg.electronicsstorev3.domain.Component;
-import anahuerta.tfg.electronicsstorev3.domain.Orders;
-import anahuerta.tfg.electronicsstorev3.domain.User;
+import anahuerta.tfg.electronicsstorev3.domain.request.RequestSignUp;
 import anahuerta.tfg.electronicsstorev3.persistence.component.ComponentRepository;
 import anahuerta.tfg.electronicsstorev3.persistence.orders.OrdersRepository;
 import anahuerta.tfg.electronicsstorev3.persistence.user.UserRepository;
+
 import anahuerta.tfg.electronicsstorev3.service.ElectronicsStoreService;
+
+import anahuerta.tfg.electronicsstorev3.domain.User;
+import anahuerta.tfg.electronicsstorev3.domain.Cart;
+import anahuerta.tfg.electronicsstorev3.domain.Component;
 
 @Service
 public class ElectronicsStoreServiceImpl implements ElectronicsStoreService{
@@ -73,11 +75,8 @@ public class ElectronicsStoreServiceImpl implements ElectronicsStoreService{
 	}
 
 	@Override
-	public boolean createUser(User user) {
-		if(userRepository.save(user)!=null)
-			return true;
-		return false;
-		
+	public int createUser(RequestSignUp requestSignUp) {
+		return userRepository.createUser(requestSignUp);
 	}
 	
 }

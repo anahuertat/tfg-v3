@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import anahuerta.tfg.electronicsstorev3.domain.Cart;
 import anahuerta.tfg.electronicsstorev3.domain.Component;
 import anahuerta.tfg.electronicsstorev3.domain.User;
+import anahuerta.tfg.electronicsstorev3.domain.request.RequestLogin;
+import anahuerta.tfg.electronicsstorev3.domain.request.RequestSignUp;
 import anahuerta.tfg.electronicsstorev3.service.ElectronicsStoreService;
 
 @RestController
@@ -27,17 +29,19 @@ public class ElectronicsStoreController {
 	}
 	
 	@PostMapping("/login")
-	public boolean login(@RequestBody String email, String password) {
-		user = storeService.login(email, password);
+	public boolean login(@RequestBody RequestLogin requestLogin) {
+		user = storeService.login(requestLogin.getEmail(), requestLogin.getPassword());
 		if(user!=null) {
+			System.out.println(user.getUserId());
 			return true;
 		}
 		return false;
 	}
 	
 	@PostMapping("/sign")
-	public boolean signUp(@RequestBody User user) {
-		return storeService.createUser(user);
+	public int signUp(@RequestBody RequestSignUp requestSignUp) {
+		//return storeService.createUser(requestSignUp);
+		return 0;
 	}
 	
 	@GetMapping("/cart")
