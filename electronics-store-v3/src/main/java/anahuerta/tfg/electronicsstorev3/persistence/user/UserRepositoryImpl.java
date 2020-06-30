@@ -21,11 +21,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 		query.setParameter(1, user_id);
 		User u = (User) query.getResultList().get(0);
 		return u.orders;
-		
 	}
 
 	@Transactional
-	@org.springframework.data.jpa.repository.Query
 	public int createUser(RequestSignUp requestSignUp) {
 		entityManager.createNativeQuery("INSERT INTO User (email, name, last_name, password, address) VALUES (?,?,?,?,?)")
 			.setParameter(1, requestSignUp.getEmail())

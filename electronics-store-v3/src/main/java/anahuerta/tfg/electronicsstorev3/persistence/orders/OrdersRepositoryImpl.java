@@ -19,11 +19,10 @@ public class OrdersRepositoryImpl implements OrdersRepositoryCustom{
 		while(it.hasNext()) {
 			Component c = it.next();
 			Query query = entityManager.createNativeQuery("INSERT INTO Orders o (address, user_id, reference) VALUES (?,?,?)");
-			query.setParameter(1, order.getAddress()+"%");
-			query.setParameter(2, order.user.getUserId()+"%");
-			query.setParameter(3, c.getReference()+"%");
+			query.setParameter(1, order.getAddress());
+			query.setParameter(2, order.user.getUserId());
+			query.setParameter(3, c.getReference());
 		}
-		
 		
 	}
 }

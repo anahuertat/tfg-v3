@@ -33,12 +33,7 @@ public class Orders {
 		inverseJoinColumns = @JoinColumn(name = "reference"))
 	public Set<Component> componentsInThisOrder;
 	
-	public Orders() {
-		order_number = null;
-		address = null;
-		user = null;
-		componentsInThisOrder = null;
-	}
+	public Orders() {}
 	
 	public Integer getOrderNumber() {
 		return order_number;
@@ -47,7 +42,5 @@ public class Orders {
 	public String getAddress() {
 		return address;
 	}
-	
-	
 	
 }
